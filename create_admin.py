@@ -2,12 +2,18 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 import os
+import time
 
 # Create a minimal Flask app
 app = Flask(__name__)
 # Ensure the instance folder exists
 os.makedirs(os.path.dirname(os.path.abspath(__file__)), exist_ok=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///bus_tracker.db')
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL is not set. Please configure it in Render.")
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
