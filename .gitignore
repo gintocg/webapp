@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Exclude all Aider files to prevent API key leaks
+=======
+# Aider files
+>>>>>>> parent of a07e712 (fix: Update .gitignore to prevent leaking sensitive Aider files)
 .aider*
 .aider.chat.history.md
 .aider.input.history
