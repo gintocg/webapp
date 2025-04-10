@@ -46,7 +46,7 @@
                         {% if error %}
                         <div class="alert alert-danger">{{ error }}</div>
                         {% endif %}
-                        <form method="POST">
+                        <form method="POST" action="{{ url_for('add_bus') }}">
                             <div class="form-group">
                                 <label for="number"><i class="fas fa-bus mr-1"></i> Bus Number</label>
                                 <input type="number" class="form-control" id="number" name="number" placeholder="Enter bus number" required>
