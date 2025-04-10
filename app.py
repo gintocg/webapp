@@ -23,7 +23,6 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     role = db.Column(db.String(20), nullable=False)  # 'student', 'parent', 'volunteer', 'admin'
-    admission_number = db.Column(db.String(50), nullable=True)  # Required for students and parents
     
 class BusLocation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,27 +70,12 @@ def register():
         username = request.form.get('username')
         password = request.form.get('password')
         role = request.form.get('role')
-        admission_number = request.form.get('admission_number')
         
-        # Validate email format (must end with @jecc.ac.in)
-        if not username.endswith('@jecc.ac.in'):
-            return render_template('register.html', error='Email must be a valid organization email ending with @jecc.ac.in')
-        
-        # Check if username already exists
         if User.query.filter_by(username=username).first():
             return render_template('register.html', error='Username already exists')
         
-        # Validate admission number for students and parents
-        if role in ['student', 'parent'] and not admission_number:
-            return render_template('register.html', error='Admission number is required for students and parents')
-        
         hashed_password = generate_password_hash(password)
-        new_user = User(
-            username=username, 
-            password=hashed_password, 
-            role=role,
-            admission_number=admission_number if role in ['student', 'parent'] else None
-        )
+        new_user = User(username=username, password=hashed_password, role=role)
         
         db.session.add(new_user)
         db.session.commit()
@@ -150,37 +134,7 @@ def admin_dashboard():
     
     return render_template('admin_dashboard.html', buses=buses, stats=stats)
 
-@app.route('/admin/users')
-def admin_users():
-    if 'user_id' not in session or session['role'] != 'admin':
-        return redirect(url_for('login'))
-    
-    users = User.query.all()
-    
-    # Get statistics for admin dashboard
-    stats = {
-        'total_users': User.query.count(),
-        'students': User.query.filter_by(role='student').count(),
-        'parents': User.query.filter_by(role='parent').count(),
-        'volunteers': User.query.filter_by(role='volunteer').count(),
-    }
-    
-    return render_template('admin_users.html', users=users, stats=stats)
-
-@app.route('/admin/delete_user/<int:user_id>', methods=['POST'])
-def delete_user(user_id):
-    if 'user_id' not in session or session['role'] != 'admin':
-        return redirect(url_for('login'))
-    
-    # Prevent admin from deleting themselves
-    if user_id == session['user_id']:
-        return redirect(url_for('admin_users'))
-    
-    user = User.query.get_or_404(user_id)
-    db.session.delete(user)
-    db.session.commit()
-    
-    return redirect(url_for('admin_users'))
+# Removed admin_users route as it's not needed and causing BuildError
 
 @app.route('/admin/add_bus', methods=['GET', 'POST'])
 def add_bus():
