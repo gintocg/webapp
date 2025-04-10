@@ -185,11 +185,11 @@ def edit_bus(bus_id):
     bus = Bus.query.get_or_404(bus_id)
     
     if request.method == 'POST':
-        name = request.form.get('name')
+        number = request.form.get('number')
         route = request.form.get('route')
         
-        if name and route:
-            bus.name = name
+        if number and route:
+            bus.name = str(number)
             bus.route = route
             db.session.commit()
             return redirect(url_for('admin_dashboard'))
