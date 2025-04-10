@@ -1,6 +1,6 @@
-# Aider files
+# Aider files - exclude all aider files to prevent leaking API keys
 .aider*
-.aider.chat.history.md
+.aider.*.md
 .aider.input.history
 .aider.tags.cache.v4/
 
