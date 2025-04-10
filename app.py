@@ -232,6 +232,21 @@ def get_location(bus_id):
     
     return jsonify({'error': 'No location data available'}), 404
 
+@app.route('/admin/delete_user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    if 'user_id' not in session or session['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    # Don't allow deleting yourself
+    if user_id == session['user_id']:
+        return redirect(url_for('admin_users'))
+    
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    
+    return redirect(url_for('admin_users'))
+
 @app.route('/logout')
 def logout():
     session.clear()
