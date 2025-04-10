@@ -16,3 +16,15 @@
 
 # 2025-04-11 00:59:02.850810
 +n
+
+# 2025-04-11 01:12:15.123327
++while adding bus, change current feild "bus name" to "bus number" which allows only number.
+
+# 2025-04-11 01:12:35.644445
++y
+
+# 2025-04-11 01:15:18.764202
++/run python -c "from app import app, db; app.app_context().push(); db.drop_all(); db.create_all()"
+
+# 2025-04-11 01:15:18.773666
++/run python -c "from app import app, db; app.app_context().push(); db.drop_all(); db.create_all()"
