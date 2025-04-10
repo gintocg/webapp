@@ -134,7 +134,13 @@ def admin_dashboard():
     
     return render_template('admin_dashboard.html', buses=buses, stats=stats)
 
-# Removed admin_users route as it's not needed and causing BuildError
+@app.route('/admin/users')
+def admin_users():
+    if 'user_id' not in session or session['role'] != 'admin':
+        return redirect(url_for('login'))
+    
+    users = User.query.all()
+    return render_template('admin_users.html', users=users)
 
 @app.route('/admin/add_bus', methods=['GET', 'POST'])
 def add_bus():
