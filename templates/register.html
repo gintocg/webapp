@@ -30,15 +30,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="role">Role</label>
-                                <select class="form-control" id="role" name="role" required onchange="updateIdLabel()">
+                                <select class="form-control" id="role" name="role" required>
                                     <option value="student">Student</option>
                                     <option value="parent">Parent</option>
                                     <option value="volunteer">Volunteer/Driver</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="id_number" id="id_label">Admission Number</label>
-                                <input type="text" class="form-control" id="id_number" name="id_number" required>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Register</button>
                         </form>
@@ -54,20 +50,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        function updateIdLabel() {
-            const role = document.getElementById('role').value;
-            const idLabel = document.getElementById('id_label');
-            
-            if (role === 'volunteer') {
-                idLabel.textContent = 'Employee Number';
-            } else {
-                idLabel.textContent = 'Admission Number';
-            }
-        }
-        
-        // Initialize the label on page load
-        document.addEventListener('DOMContentLoaded', updateIdLabel);
-    </script>
 </body>
 </html>

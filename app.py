@@ -23,7 +23,6 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     role = db.Column(db.String(20), nullable=False)  # 'student', 'parent', 'volunteer', 'admin'
-    id_number = db.Column(db.String(50), nullable=True)  # admission number or employee number
     
 class BusLocation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,17 +70,12 @@ def register():
         username = request.form.get('username')
         password = request.form.get('password')
         role = request.form.get('role')
-        id_number = request.form.get('id_number')
         
         if User.query.filter_by(username=username).first():
             return render_template('register.html', error='Username already exists')
         
-        if not id_number:
-            id_label = "admission number" if role in ['student', 'parent'] else "employee number"
-            return render_template('register.html', error=f'Please enter your {id_label}')
-        
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, password=hashed_password, role=role, id_number=id_number)
+        new_user = User(username=username, password=hashed_password, role=role)
         
         db.session.add(new_user)
         db.session.commit()
