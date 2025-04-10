@@ -33,7 +33,7 @@
 +validation is now correct but bus is not getting added.
 
 # 2025-04-11 01:28:22.610860
-+aider --model sonnet --api-key anthropic=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
++aider --model sonnet --api-key anthropic=API_KEY_REMOVED
 
 # 2025-04-11 01:31:08.542952
 +/exit
