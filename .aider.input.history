@@ -28,3 +28,24 @@
 
 # 2025-04-11 01:15:18.773666
 +/run python -c "from app import app, db; app.app_context().push(); db.drop_all(); db.create_all()"
+
+# 2025-04-11 01:28:07.697662
++validation is now correct but bus is not getting added.
+
+# 2025-04-11 01:28:22.610860
++aider --model sonnet --api-key anthropic=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
+
+# 2025-04-11 01:31:08.542952
++/exit
+
+# 2025-04-11 01:31:15.476106
++n
+
+# 2025-04-11 01:31:33.740132
++bus number validation is now correct but bus is not getting added.
+
+# 2025-04-11 01:31:39.005567
++y
+
+# 2025-04-11 01:32:15.801879
++n
