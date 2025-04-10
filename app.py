@@ -151,17 +151,13 @@ def add_bus():
         number = request.form.get('number')
         route = request.form.get('route')
         
-        try:
-            if number and route:
-                new_bus = Bus(name=str(number), route=route)
-                db.session.add(new_bus)
-                db.session.commit()
-                return redirect(url_for('admin_dashboard'))
-            else:
-                return render_template('add_bus.html', error="Bus number and route are required")
-        except Exception as e:
-            db.session.rollback()
-            return render_template('add_bus.html', error=f"Error adding bus: {str(e)}")
+        if number and route:
+            new_bus = Bus(name=str(number), route=route)
+            db.session.add(new_bus)
+            db.session.commit()
+            return redirect(url_for('admin_dashboard'))
+        else:
+            return render_template('add_bus.html', error="Bus number and route are required")
         
     return render_template('add_bus.html')
 
